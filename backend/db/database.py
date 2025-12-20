@@ -1,7 +1,6 @@
 import asyncpg
 from config import config
 from log.log import setup_logger
-import asyncio
 
 logger = setup_logger("Database-connect")
 
@@ -28,7 +27,6 @@ class DataBase:
                 )
                 logger.info("Соединение с базой данных установлено и пул подключений создан.")
                 
-                # Создаем таблицы после успешного подключения
                 await self.create_tables()
                 
             except Exception as e:
@@ -36,10 +34,10 @@ class DataBase:
                 self._pool = None
                 raise
         
-        return self._pool  # ВАЖНО: возвращаем пул
+        return self._pool
 
     async def get_pool(self):
-        """Получить пул соединений (если нужно, создает его)"""
+        """Получить пул соединений"""
         if not self._pool:
             await self.connect()
         return self._pool

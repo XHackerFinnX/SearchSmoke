@@ -14,7 +14,6 @@ async def add_and_check_userdata(userdata: dict):
     user_photo_url = userdata.photo_url
     
     try:
-        # Подключаемся один раз и получаем пул
         pool = await Database.connect()
         
         # Проверяем существование пользователя
