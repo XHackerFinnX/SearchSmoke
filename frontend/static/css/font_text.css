@@ -1,0 +1,11 @@
+@font-face {
+    font-family: "SFProText";
+    src: url("../fonts/SFProText-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+* {
+    font-family: "SFProText", -apple-system, BlinkMacSystemFont,
+        "Helvetica Neue", sans-serif;
+}

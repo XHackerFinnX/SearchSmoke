@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Каталог</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="/frontend/static/css/catalog.css" />
+        <link rel="stylesheet" href="/frontend/static/css/font_text.css" />
+        <link rel="stylesheet" href="/frontend/static/css/no_blue.css" />
+        <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    </head>
+    <body>
+        <!-- Redesigned top header with join button and plus icon -->
+        <header class="header">
+            <div class="header-spacer"></div>
+            <div class="header-actions">
+                <button class="join-button">
+                    <div>ВСТУПИТЬ В SMOKE</div>
+                    <div class="plus-container">
+                        <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 12 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <g clip-path="url(#clip0_139_5115)">
+                                <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M6.85714 0.857143C6.85714 0.383756 6.47338 0 6 0C5.52662 0 5.14286 0.383756 5.14286 0.857143V5.14286H0.857143C0.383756 5.14286 0 5.52662 0 6C0 6.47338 0.383756 6.85714 0.857143 6.85714H5.14286V11.1429C5.14286 11.6163 5.52662 12 6 12C6.47338 12 6.85714 11.6163 6.85714 11.1429V6.85714H11.1429C11.6163 6.85714 12 6.47338 12 6C12 5.52662 11.6163 5.14286 11.1429 5.14286H6.85714V0.857143Z"
+                                    fill="currentColor"
+                                ></path>
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_139_5115">
+                                    <rect
+                                        width="12"
+                                        height="12"
+                                        fill="white"
+                                    ></rect>
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-container">
+            <!-- Auto-rotating carousel with modern design -->
+            <section class="carousel-section">
+                <div class="carousel-wrapper">
+                    <div class="carousel-slide active" data-slide="0">
+                        <div class="slide-content slide-1"></div>
+                    </div>
+                    <div class="carousel-slide" data-slide="1">
+                        <div class="slide-content slide-2"></div>
+                    </div>
+                    <div class="carousel-slide" data-slide="2">
+                        <div class="slide-content slide-3"></div>
+                    </div>
+                </div>
+                <div class="carousel-dots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                    <span class="dot" data-index="2"></span>
+                </div>
+            </section>
+
+            <!-- Category buttons with modern pill design -->
+            <section class="category-section">
+                <button class="category-button active" data-category="new">
+                    Новинки
+                </button>
+                <button class="category-button" data-category="all">
+                    Все товары
+                </button>
+                <button class="category-button" data-category="top">
+                    Топ товары
+                </button>
+                <button class="category-button" data-category="shops">
+                    Магазины
+                </button>
+            </section>
+
+            <!-- Modern filter dropdowns -->
+            <section class="filter-section">
+                <div class="filter-container">
+                    <button class="filter-button" data-filter="collection">
+                        Коллекция
+                        <span class="filter-count" id="collectionCount"></span>
+                        <svg
+                            class="filter-icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 320 512"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                            />
+                        </svg>
+                    </button>
+
+                    <button class="filter-button" data-filter="model">
+                        Модель
+                        <span class="filter-count" id="modelCount"></span>
+                        <svg
+                            class="filter-icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 320 512"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                            />
+                        </svg>
+                    </button>
+
+                    <button class="filter-button" data-filter="background">
+                        Фон
+                        <span class="filter-count" id="backgroundCount"></span>
+                        <svg
+                            class="filter-icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 320 512"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Clean search bar design -->
+            <section class="search-section">
+                <div class="search-box">
+                    <svg
+                        class="search-i"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                        />
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Поиск" />
+                </div>
+            </section>
+
+            <button id="clearFiltersBtn" class="clear-filters-btn">
+                Очистить фильтр
+            </button>
+
+            <!-- Product grid with modern card design -->
+            <section class="products-section">
+                <div class="products-grid" id="productsGrid"></div>
+            </section>
+        </main>
+
+        <!-- Fixed bottom navigation bar -->
+        <nav class="bottom-nav">
+            <a href="catalog.html" class="nav-link active">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 640 512"
+                    aria-hidden="true"
+                >
+                    <path
+                        fill="currentColor"
+                        d="M0 155.2L51.2 32h537.6L640 155.2v52.8c0 29.1-23.7 52.8-52.8 52.8-21.7 0-40.4-13.2-48-32-7.6 18.8-26.3 32-48 32s-40.4-13.2-48-32c-7.6 18.8-26.3 32-48 32s-40.4-13.2-48-32c-7.6 18.8-26.3 32-48 32s-40.4-13.2-48-32c-7.6 18.8-26.3 32-48 32s-40.4-13.2-48-32c-7.6 18.8-26.3 32-48 32-29.1 0-52.8-23.7-52.8-52.8V155.2zM96 480V288c16.7 10.1 36.3 16 57.6 16 21.6 0 41.5-6.1 57.6-16 16.1 9.9 36 16 57.6 16s41.5-6.1 57.6-16c16.1 9.9 36 16 57.6 16s41.5-6.1 57.6-16c16.1 9.9 36 16 57.6 16s41.5-6.1 57.6-16V480c0 17.7-14.3 32-32 32H128c-17.7 0-32-14.3-32-32z"
+                    />
+                </svg>
+
+                <span>Каталог</span>
+            </a>
+            <a href="map.html" class="nav-link">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 576 512"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                >
+                    <path
+                        d="M288 0c-69.59 0-126 56.41-126 126 0 56.26 82.35 158.8 113.9 196.02 6.39 7.54 17.82 7.54 24.2 0C331.65 284.8 414 182.26 414 126 414 56.41 357.59 0 288 0zm0 168c-23.2 0-42-18.8-42-42s18.8-42 42-42 42 18.8 42 42-18.8 42-42 42zM20.12 215.95A32.006 32.006 0 0 0 0 245.66v250.32c0 11.32 11.43 19.06 21.94 14.86L160 448V214.92c-8.84-15.98-16.07-31.54-21.25-46.42L20.12 215.95zM288 359.67c-14.07 0-27.38-6.18-36.51-16.96-19.66-23.2-40.57-49.62-59.49-76.72v182l192 64V266c-18.92 27.09-39.82 53.52-59.49 76.72-9.13 10.77-22.44 16.95-36.51 16.95zm266.06-198.51L416 224v288l139.88-55.95A31.996 31.996 0 0 0 576 426.34V176.02c0-11.32-11.43-19.06-21.94-14.86z"
+                    />
+                </svg>
+                <span>Карта</span>
+            </a>
+            <a href="settings.html" class="nav-link">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 512 512"
+                    aria-hidden="true"
+                >
+                    <path
+                        fill="currentColor"
+                        d="M487.4 315.7l-42.8-24.7c2.7-14.9 2.7-30.1 0-45l42.8-24.7c15.1-8.7 20.3-28.1 11.6-43.2l-43.2-74.8c-8.7-15.1-28.1-20.3-43.2-11.6l-42.8 24.7c-11.6-10.1-24.7-17.7-38.8-22.7V24.7C330 9.5 317.5-3 302.3-3h-92.6C194.5-3 182 9.5 182 24.7v49.3c-14.1 5-27.2 12.6-38.8 22.7L100.4 72c-15.1-8.7-34.5-3.5-43.2 11.6L14 158.4c-8.7 15.1-3.5 34.5 11.6 43.2l42.8 24.7c-2.7 14.9-2.7 30.1 0 45L25.6 296c-15.1 8.7-20.3 28.1-11.6 43.2l43.2 74.8c8.7 15.1 28.1 20.3 43.2 11.6l42.8-24.7c11.6 10.1 24.7 17.7 38.8 22.7v49.3c0 15.2 12.5 27.7 27.7 27.7h92.6c15.2 0 27.7-12.5 27.7-27.7v-49.3c14.1-5 27.2-12.6 38.8-22.7l42.8 24.7c15.1 8.7 34.5 3.5 43.2-11.6l43.2-74.8c8.7-15.1 3.5-34.5-11.6-43.2zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+                    />
+                </svg>
+
+                <span>Настройки</span>
+            </a>
+        </nav>
+
+        <!-- Модальное окно фильтра -->
+        <div id="filterModal" class="modal-overlay">
+            <div class="modal-content-panel">
+                <div class="modal-header">
+                    <button class="modal-close" onclick="closeFilterModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <h2 id="filterTitle">Фильтр</h2>
+                </div>
+                <div
+                    style="font-size: 14px; color: #6d6d71; padding-left: 16px"
+                >
+                    Выберите одну или несколько
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-panel" id="filterOptions">
+                        <!-- чекбоксы подставляются JS -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="reset-filter-btn" onclick="resetFilter()">
+                        Сбросить
+                    </button>
+                    <button class="apply-filter-btn" onclick="applyFilter()">
+                        Применить
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="/frontend/static/js/catalog.js"></script>
+        <script src="/frontend/static/js/slides.js"></script>
+        <!-- <script src="/frontend/static/js/modal_filter.js"></script> -->
+    </body>
+</html>

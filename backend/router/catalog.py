@@ -21,5 +21,5 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 logger = setup_logger("Router/basic")
 
 @router.get("/", response_class=HTMLResponse)
-async def get_basic(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def get_catalog(request: Request):
+    return templates.TemplateResponse("catalog.html", {"request": request})
