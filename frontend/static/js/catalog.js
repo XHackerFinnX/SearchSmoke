@@ -4,38 +4,202 @@
 const products = [
     {
         id: "#R3951",
+        slug: "sakura-flower",
         name: "Sakura Flower",
-        image: "/frontend/static/image/pink-sakura-flower.jpg",
+
+        quantity: 1,
+        currency: "TON",
+
+        image: [
+            "/frontend/static/image/pink-sakura-flower.jpg",
+            "/frontend/static/image/red-rose.jpg",
+        ],
+
+        pricing: {
+            basePrice: 200,
+        },
+
+        attributes: [
+            {
+                key: "model",
+                label: "Model",
+                value: "Mushroom",
+                rarity: "3%",
+                price: 2.27,
+            },
+            {
+                key: "symbol",
+                label: "Symbol",
+                value: "Ghost",
+                rarity: "0.5%",
+                price: 2.29,
+            },
+            {
+                key: "backdrop",
+                label: "Backdrop",
+                value: "Pure Gold",
+                rarity: "1.5%",
+                price: 2.26,
+            },
+            {
+                key: "min_price",
+                label: "Мин. цена",
+                price: 2.26,
+            },
+        ],
+
+        variants: {
+            colors: ["pink", "red"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Season 1",
+            category: "Flowers",
+        },
     },
-    {
-        id: "#R3970",
-        name: "Sakura Flower",
-        image: "/frontend/static/image/pink-sakura-flower.jpg",
-    },
+
     {
         id: "#R4012",
+        slug: "rose-bloom",
         name: "Rose Bloom",
-        image: "/frontend/static/image/red-rose.jpg",
+
+        quantity: 1,
+        currency: "TON",
+
+        image: ["/frontend/static/image/red-rose.jpg"],
+
+        pricing: {
+            basePrice: 300,
+        },
+
+        attributes: [
+            {
+                key: "backdrop",
+                label: "Backdrop",
+                value: "Pure Gold",
+                rarity: "1.5%",
+                price: 2.26,
+            },
+        ],
+
+        variants: {
+            colors: ["red"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Season 1",
+            category: "Flowers",
+        },
     },
+
     {
         id: "#R4038",
+        slug: "orchid-dream",
         name: "Orchid Dream",
-        image: "/frontend/static/image/purple-orchid.jpg",
+
+        quantity: 1,
+        currency: "TON",
+
+        image: ["/frontend/static/image/purple-orchid.jpg"],
+
+        pricing: {
+            basePrice: 100,
+        },
+
+        attributes: [],
+
+        variants: {
+            colors: ["purple"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Season 2",
+            category: "Flowers",
+        },
     },
+
     {
         id: "#R4041",
+        slug: "lily-pure",
         name: "Lily Pure",
-        image: "/frontend/static/image/white-lily.jpg",
+
+        quantity: 1,
+        currency: "TON",
+
+        image: ["/frontend/static/image/white-lily.jpg"],
+
+        pricing: {
+            basePrice: 1000,
+        },
+
+        attributes: [],
+
+        variants: {
+            colors: ["white"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Season 2",
+            category: "Flowers",
+        },
     },
+
     {
         id: "#R4055",
+        slug: "daisy-fresh",
         name: "Daisy Fresh",
-        image: "/frontend/static/image/white-daisy.jpg",
+
+        quantity: 1,
+        currency: "TON",
+
+        image: ["/frontend/static/image/white-daisy.jpg"],
+
+        pricing: {
+            basePrice: 600,
+        },
+
+        attributes: [],
+
+        variants: {
+            colors: ["white"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Limited",
+            category: "Flowers",
+        },
     },
+
     {
         id: "#R4068",
+        slug: "sunflower-joy",
         name: "Sunflower Joy",
-        image: "/frontend/static/image/yellow-sunflower.jpg",
+
+        quantity: 1,
+        currency: "TON",
+
+        image: ["/frontend/static/image/yellow-sunflower.jpg"],
+
+        pricing: {
+            basePrice: 900,
+        },
+
+        attributes: [],
+
+        variants: {
+            colors: ["yellow"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Limited",
+            category: "Flowers",
+        },
     },
 ];
 
@@ -45,24 +209,16 @@ const products = [
 const filtersData = {
     collection: ["Сезон 1", "Сезон 2", "Лимитед"],
     model: ["Цветы", "Животные", "Природа"],
-    background: [
-        "Зеленый",
-        "Синий",
-        "Розовый",
-        "Желтый",
-        "Зеленый",
-        "Синий",
-        "Розовый",
-        "Желтый",
-        "Желтый",
-        "Зеленый",
-        "Синий",
-        "Розовый",
-        "Желтый",
-    ],
+    background: ["Зеленый", "Синий", "Розовый", "Желтый"],
+};
+
+const cartState = {
+    total: 0,
+    count: 0,
 };
 
 let currentFilter = null;
+let currentProduct = null;
 
 let selectedFilters = {
     collection: [],
@@ -100,16 +256,18 @@ function renderProducts(list) {
 
     list.forEach((product) => {
         const card = document.createElement("div");
+
         card.className = "product-card";
         card.innerHTML = `
             <div class="product-image-container">
-                <img src="${product.image}" alt="${product.name}">
+                <img src="${product.image[0]}" alt="${product.name}">
             </div>
             <div class="product-details">
                 <div class="product-name">${product.name}</div>
                 <div class="product-id">${product.id}</div>
             </div>
         `;
+        card.addEventListener("click", () => openProductModal(product));
         grid.appendChild(card);
     });
 }
@@ -124,6 +282,17 @@ function setupCategoryButtons() {
             button.classList.add("active");
         });
     });
+}
+
+function syncDotsWithSlider(slider, dotsContainer) {
+    const dots = dotsContainer.querySelectorAll(".dot");
+
+    slider.onscroll = () => {
+        const slideWidth = slider.clientWidth;
+        const index = Math.round(slider.scrollLeft / slideWidth);
+
+        dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
+    };
 }
 
 // ======================
@@ -233,6 +402,81 @@ function closeFilterModal() {
         .forEach((b) => b.classList.remove("active"));
 }
 
+function openProductModal(product) {
+    const slider = document.getElementById("productImageSlider");
+    const dotsContainer = document.getElementById("productImageDots");
+
+    currentProduct = product;
+
+    document.getElementById("productModalName").textContent = product.name;
+    document.getElementById("productModalId").textContent = product.id;
+
+    renderAttributes(product.attributes || []);
+
+    slider.innerHTML = "";
+    dotsContainer.innerHTML = "";
+
+    product.image.forEach((src, index) => {
+        // slides
+        slider.innerHTML += `
+            <div class="product-image-slide">
+                <img src="${src}" alt="">
+            </div>
+        `;
+
+        // dots
+        dotsContainer.innerHTML += `
+            <span class="dot ${
+                index === 0 ? "active" : ""
+            }" data-index="${index}"></span>
+        `;
+    });
+
+    // если картинка одна — скрываем точки
+    dotsContainer.style.display = product.image.length > 1 ? "flex" : "none";
+
+    // старт всегда с первой
+    slider.scrollLeft = 0;
+
+    syncDotsWithSlider(slider, dotsContainer);
+
+    document.getElementById("productModal").classList.add("active");
+    lockBody();
+}
+
+function closeProductModal() {
+    document.getElementById("productModal").classList.remove("active");
+    unlockBody();
+}
+
+function renderAttributes(attributes) {
+    const container = document.getElementById("productAttributes");
+    container.innerHTML = "";
+
+    attributes.forEach((attr) => {
+        let valueHtml = "";
+
+        if (attr.name) {
+            valueHtml += attr.name;
+        }
+
+        if (attr.percent) {
+            valueHtml += ` <small>${attr.percent}</small>`;
+        }
+
+        if (attr.price !== undefined) {
+            valueHtml += ` · ${attr.price} ₽`;
+        }
+
+        container.innerHTML += `
+            <div class="attr-row">
+                <span>${attr.label}</span>
+                <span class="attr-value">${valueHtml}</span>
+            </div>
+        `;
+    });
+}
+
 // ======================
 // APPLY / RESET
 // ======================
@@ -301,3 +545,39 @@ document.getElementById("clearFiltersBtn").addEventListener("click", () => {
     renderProducts(products); // возвращаем карточки
     updateClearButtonVisibility();
 });
+
+function showCartWidget() {
+    const widget = document.getElementById("cartWidget");
+
+    document.getElementById(
+        "cartTotalPrice"
+    ).textContent = `${cartState.total.toFixed(2)} ₽`;
+
+    document.getElementById("cartTotalCount").textContent = `${
+        cartState.count
+    } ${getProductWord(cartState.count)}`;
+
+    widget.classList.add("active");
+}
+
+function getProductWord(count) {
+    if (count === 1) return "товар";
+    if (count >= 2 && count <= 4) return "товара";
+    return "товаров";
+}
+
+function addToCart() {
+    if (!currentProduct) return;
+
+    const price = getProductPrice(currentProduct);
+
+    cartState.total += price;
+    cartState.count += currentProduct.quantity || 1;
+
+    closeProductModal();
+    showCartWidget();
+}
+
+function getProductPrice(product) {
+    return product.pricing?.basePrice || 0;
+}
