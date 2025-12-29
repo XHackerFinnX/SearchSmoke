@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
-from backend.router.catalog import router as router_catalog
+from router.catalog import router as router_catalog
 from router.error import router as router_error
 from router.auth import router as router_auth
 

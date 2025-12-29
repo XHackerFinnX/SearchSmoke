@@ -769,19 +769,116 @@ body.modal-open {
 }
 
 .product-details {
-    padding: 1px 12px 12px 12px;
+    padding: 1px 12px 7px 12px;
 }
 
 .product-name {
     font-size: 18px;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 4px;
+    white-space: nowrap; /* Ожидаем, что текст не будет переноситься */
+    overflow: hidden; /* Скрываем текст, выходящий за пределы блока */
+    max-width: 100%; /* Оставляем блок на ширину родителя */
+    text-overflow: ellipsis; /* Обеспечиваем многоточие при переполнении */
 }
 
 .product-id {
     font-size: 13px;
     color: var(--text-secondary);
+}
+
+.product-store {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.store-name {
+    font-weight: bold;
+    white-space: nowrap; /* Ожидаем, что текст не будет переноситься */
+    overflow: hidden; /* Скрываем текст, выходящий за пределы блока */
+    text-overflow: ellipsis; /* Добавляем многоточие для обрезанного текста */
+    max-width: 100%; /* Оставляем блок на ширину родителя */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.product-store svg {
+    opacity: 0.7;
+}
+
+/* Стиль для блока с расстоянием и ценой */
+.product-distance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    white-space: nowrap;
+}
+
+/* Стиль для текста с ценой */
+.product-price {
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap; /* Запрещаем перенос цены */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50%; /* Ограничиваем ширину, чтобы не занимала слишком много места */
+}
+
+/* Контейнер для дистанции и иконки */
+.distance-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* Текст для километров */
+.km-text {
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap; /* Запрещаем перенос текста о километрах */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Индикатор загрузки */
+.distance-placeholder {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--accent-primary);
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 5px; /* Добавляем отступ справа */
+}
+
+/* Стиль для километров */
+.km {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Иконка для расстояния */
+.distance-icon {
+    vertical-align: middle;
+    margin-left: 2px;
+}
+
+/* Анимация вращающегося индикатора */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Fixed bottom navigation with modern design */
