@@ -4,12 +4,9 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Карта</title>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        />
-        <link rel="stylesheet" href="catalog.css" />
-        <link rel="stylesheet" href="fonts.css" />
+        <link rel="stylesheet" href="/frontend/static/css/catalog.css" />
+        <link rel="stylesheet" href="/frontend/static/css/font_text.css" />
+        <link rel="stylesheet" href="/frontend/static/css/no_blue.css" />
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
     </head>
     <body>
@@ -85,18 +82,55 @@
             </section>
         </main>
 
+        <!-- Fixed bottom navigation bar -->
         <nav class="bottom-nav">
-            <a href="catalog.html" class="nav-link">
-                <i class="fas fa-store"></i>
+            <a href="/frontend/templates/catalog.html" class="nav-link">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 640 512"
+                    aria-hidden="true"
+                >
+                    <path
+                        fill="currentColor"
+                        d="M0 155.2L51.2 32h537.6L640 155.2v52.8c0 29.1-23.7 52.8-52.8 52.8-21.7 0-40.4-13.2-48-32-7.6 18.8-26.3 32-48 32s-40.4-13.2-48-32c-7.6 18.8-26.3 32-48 32s-40.4-13.2-48-32c-7.6 18.8-26.3 32-48 32s-40.4-13.2-48-32c-7.6 18.8-26.3 32-48 32s-40.4-13.2-48-32c-7.6 18.8-26.3 32-48 32-29.1 0-52.8-23.7-52.8-52.8V155.2zM96 480V288c16.7 10.1 36.3 16 57.6 16 21.6 0 41.5-6.1 57.6-16 16.1 9.9 36 16 57.6 16s41.5-6.1 57.6-16c16.1 9.9 36 16 57.6 16s41.5-6.1 57.6-16c16.1 9.9 36 16 57.6 16s41.5-6.1 57.6-16V480c0 17.7-14.3 32-32 32H128c-17.7 0-32-14.3-32-32z"
+                    />
+                </svg>
+
                 <span>Каталог</span>
             </a>
-            <a href="map.html" class="nav-link active">
-                <i class="fas fa-map-marked-alt"></i>
+            <a href="/frontend/templates/map.html" class="nav-link active">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 576 512"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                >
+                    <path
+                        d="M288 0c-69.59 0-126 56.41-126 126 0 56.26 82.35 158.8 113.9 196.02 6.39 7.54 17.82 7.54 24.2 0C331.65 284.8 414 182.26 414 126 414 56.41 357.59 0 288 0zm0 168c-23.2 0-42-18.8-42-42s18.8-42 42-42 42 18.8 42 42-18.8 42-42 42zM20.12 215.95A32.006 32.006 0 0 0 0 245.66v250.32c0 11.32 11.43 19.06 21.94 14.86L160 448V214.92c-8.84-15.98-16.07-31.54-21.25-46.42L20.12 215.95zM288 359.67c-14.07 0-27.38-6.18-36.51-16.96-19.66-23.2-40.57-49.62-59.49-76.72v182l192 64V266c-18.92 27.09-39.82 53.52-59.49 76.72-9.13 10.77-22.44 16.95-36.51 16.95zm266.06-198.51L416 224v288l139.88-55.95A31.996 31.996 0 0 0 576 426.34V176.02c0-11.32-11.43-19.06-21.94-14.86z"
+                    />
+                </svg>
                 <span>Карта</span>
             </a>
-            <a href="settings.html" class="nav-link">
-                <i class="fas fa-cog"></i>
-                <span>Настройки</span>
+            <a href="/frontend/templates/profile.html" class="nav-link">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <circle cx="12" cy="8" r="5" />
+                    <path d="M20 21a8 8 0 0 0-16 0" />
+                </svg>
+
+                <span>Профиль</span>
             </a>
         </nav>
     </body>
