@@ -3,7 +3,6 @@ const cartData = [
         id: 19965,
         name: "Fresh Socks",
         price: 17.99,
-        old: 17.94,
         img: "/frontend/static/image/white-lily.jpg",
         store: "Fresh Shop",
         distance: 2.3,
@@ -13,7 +12,6 @@ const cartData = [
         id: 77764,
         name: "Ice Cream",
         price: 6.06,
-        old: 6.03,
         img: "/frontend/static/image/white-daisy.jpg",
         store: "Sweet Treats",
         distance: 0.8,
@@ -22,7 +20,10 @@ const cartData = [
 ];
 
 let clearCountdown = 0;
-let isAllSelected = false;
+let clearTimer = null;
+let backupCart = [];
+let startX = null;
+let swipeDirection = null;
 
 const trashSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="#ff4d4d" xmlns="http://www.w3.org/2000/svg">
     <path d="M3 6H21M5 6V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20V6M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke="#ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -63,69 +64,56 @@ const distanceSvg = `<svg
                                 <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
                             </svg>`;
 
-function updateCartCount() {
-    const count = cartData.filter((item) => item.selected).length;
-    document.getElementById("cartCount").textContent = count;
-    isAllSelected = count === cartData.length && cartData.length > 0;
-    updateSelectButtonText();
-}
-
-function updateSelectButtonText() {
-    const btn = document.querySelector(".cart-unselect");
-    if (isAllSelected) {
-        btn.textContent = "Выделить всё";
-        btn.classList.add("active");
-    } else {
-        btn.textContent = "Снять выделение";
-        btn.classList.remove("active");
-    }
-}
-
 function renderCart() {
     const cart = document.getElementById("cartList");
     cart.innerHTML = "";
 
-    cartData.forEach((product, index) => {
-        const cartItem = document.createElement("div");
-        cartItem.className = `cart-item ${product.selected ? "active" : ""}`;
-
-        cartItem.innerHTML = `
-            <img src="${product.img}" class="cart-img" alt="${product.name}">
+    cartData.forEach((item, index) => {
+        cart.innerHTML += `
+        <div class="cart-item ${item.selected ? "active" : ""}">
+            <img src="${item.img}" class="cart-img">
             <div class="cart-body">
-                <div class="cart-name">${product.name}</div>
-                <div class="store-name">${storeSvg}<div>${product.store}</div></div>
+                <div class="cart-name">${item.name}</div>
+                <div class="store-name">${storeSvg} ${item.store}</div>
                 <div class="product-distance">
-                    <span class="product-price">${product.price} TON</span>
-                    <span>${product.distance} км</span>${distanceSvg}
+                    <span class="product-price">${item.price} ₽</span>
+                    <span>${item.distance} км ${distanceSvg}</span>
                 </div>
             </div>
             <div class="cart-right">
                 <div class="cart-check" onclick="toggleItem(${index})"></div>
                 <div class="cart-trash" onclick="removeItem(${index})">${trashSvg}</div>
             </div>
-        `;
-
-        cart.appendChild(cartItem);
+        </div>`;
     });
 
     updateCartCount();
 }
 
-// Функция переключения выделения
-function toggleAllItems() {
+function updateCartCount() {
+    const selected = cartData.filter((i) => i.selected).length;
+    document.getElementById("cartCount").textContent = selected;
+
     const btn = document.querySelector(".cart-unselect");
-    btn.classList.add("active");
+    btn.textContent =
+        selected === cartData.length && cartData.length
+            ? "Снять выделение"
+            : "Выделить всё";
 
-    if (isAllSelected) {
-        // Выделить всё
-        cartData.forEach((item) => (item.selected = true));
+    const clearBtn = document.querySelector(".cart-clear");
+    if (cartData.length === 0) {
+        clearBtn.style.pointerEvents = "none";
+        clearBtn.style.opacity = "0.4";
     } else {
-        // Снять выделение
-        cartData.forEach((item) => (item.selected = false));
+        clearBtn.style.pointerEvents = "auto";
+        clearBtn.style.opacity = "1";
     }
+}
 
+function toggleAllItems() {
+    const allSelected = cartData.every((i) => i.selected);
+    cartData.forEach((i) => (i.selected = !allSelected));
     renderCart();
-    setTimeout(() => btn.classList.remove("active"), 200);
 }
 
 function toggleItem(index) {
@@ -138,8 +126,9 @@ function removeItem(index) {
     renderCart();
 }
 
-// Модальное окно очистки
 function showClearModal() {
+    backupCart = JSON.parse(JSON.stringify(cartData));
+
     const modal = document.getElementById("clearModal");
     const counter = document.getElementById("modalCounter");
 
@@ -147,76 +136,84 @@ function showClearModal() {
     counter.textContent = clearCountdown;
     modal.classList.add("active");
 
-    const countdownInterval = setInterval(() => {
+    clearTimer = setInterval(() => {
         clearCountdown--;
         counter.textContent = clearCountdown;
 
-        if (clearCountdown <= 0) {
-            clearInterval(countdownInterval);
-            clearCart();
-            closeClearModal();
-        }
+        if (clearCountdown <= 0) confirmClear();
     }, 1000);
+
+    addSwipeHandlers(modal);
 }
 
-function closeClearModal() {
-    document.getElementById("clearModal").classList.remove("active");
-    clearCountdown = 0;
-}
-
-// Очистка корзины
-function clearCart() {
+function confirmClear() {
+    clearInterval(clearTimer);
     cartData.length = 0;
+    closeClearModal(false);
     renderCart();
 }
 
-// Закрытие по клику вне модалки
-document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("cart-modal")) {
-        closeClearModal();
+function closeClearModal(restore = true) {
+    const content = document.querySelector(".modal-content");
+    content.style.transform = "translateX(0) scale(1)";
+    content.style.opacity = "1";
+    clearInterval(clearTimer);
+    document.getElementById("clearModal").classList.remove("active");
+
+    if (restore) {
+        cartData.length = 0;
+        backupCart.forEach((i) => cartData.push(i));
+        renderCart();
     }
-});
+}
 
-// Event listeners для header кнопок
-document.addEventListener("DOMContentLoaded", function () {
-    const unselectBtn = document.querySelector(".cart-unselect");
-    const clearBtn = document.querySelector(".cart-clear");
+function addSwipeHandlers(modal) {
+    const content = modal.querySelector(".modal-content");
 
-    unselectBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        toggleAllItems();
+    content.addEventListener("touchstart", (e) => {
+        startX = e.touches[0].clientX;
+        content.style.transition = "none";
     });
 
-    clearBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        showClearModal();
+    content.addEventListener("touchmove", (e) => {
+        if (!startX) return;
+
+        const currentX = e.touches[0].clientX;
+        const diff = currentX - startX;
+
+        content.style.transform = `translateX(${diff}px) scale(0.97)`;
+        content.style.opacity = 1 - Math.abs(diff) / 300;
     });
 
-    // Подчеркивание при наведении
-    unselectBtn.addEventListener("mouseenter", () =>
-        unselectBtn.classList.add("active")
-    );
-    unselectBtn.addEventListener("mouseleave", () => {
-        if (!isAllSelected) unselectBtn.classList.remove("active");
-    });
+    content.addEventListener("touchend", (e) => {
+        if (!startX) return;
 
-    clearBtn.addEventListener("mouseenter", () =>
-        clearBtn.classList.add("active")
-    );
-    clearBtn.addEventListener("mouseleave", () =>
-        clearBtn.classList.remove("active")
-    );
+        const diff = e.changedTouches[0].clientX - startX;
+        content.style.transition = "transform 0.25s ease, opacity 0.25s ease";
 
-    // Убрать подчеркивание при клике на фон
-    document.addEventListener("click", (e) => {
-        if (!e.target.closest(".cart-actions")) {
-            document
-                .querySelectorAll(".cart-unselect, .cart-clear")
-                .forEach((btn) => {
-                    btn.classList.remove("active");
-                });
+        if (diff < -100) {
+            content.style.transform = "translateX(-120%) scale(0.8)";
+            content.style.opacity = "0";
+            setTimeout(confirmClear, 200);
+        } else if (diff > 100) {
+            content.style.transform = "translateX(120%) scale(0.8)";
+            content.style.opacity = "0";
+            setTimeout(confirmClear, 200);
+        } else {
+            content.style.transform = "translateX(0) scale(1)";
+            content.style.opacity = "1";
         }
-    });
-});
 
-renderCart();
+        startX = null;
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    document
+        .querySelector(".cart-unselect")
+        .addEventListener("click", toggleAllItems);
+    document
+        .querySelector(".cart-clear")
+        .addEventListener("click", showClearModal);
+    renderCart();
+});

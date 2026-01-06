@@ -149,7 +149,7 @@ body {
 
 .cart-name {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--text-primary);
 }
 
@@ -157,7 +157,7 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-secondary);
 }
 
@@ -287,6 +287,17 @@ body {
     }
 }
 
+@media (max-width: 350px) {
+    .cart-unselect,
+    .cart-clear {
+        font-size: 14px;
+    }
+
+    .cart-title {
+        font-size: 18px;
+    }
+}
+
 /* Модальное окно */
 .cart-modal {
     position: fixed;
@@ -309,7 +320,7 @@ body {
 .modal-content {
     display: flex;
     background: #3a3a3a;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 8px;
     text-align: center;
     width: 100%;
@@ -373,7 +384,7 @@ body {
 }
 
 .modal-text {
-    font-size: 16px;
+    font-size: 14px;
     color: var(--text-primary);
     line-height: 1.4;
 }
@@ -386,7 +397,7 @@ body {
     background: var(--accent-primary);
     color: white;
     border: none;
-    font-size: 14px;
+    font-size: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -404,4 +415,12 @@ body {
     width: 100%;
     height: 100%;
     cursor: pointer;
+}
+
+@media (max-width: 375px) {
+    .modal-counter,
+    .modal-text,
+    .modal-back-btn {
+        font-size: 12px;
+    }
 }
