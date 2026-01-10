@@ -8,7 +8,7 @@ const products = [
         name: "Sakura Flower",
 
         quantity: 1,
-        currency: "TON",
+        currency: "₽",
 
         image: [
             "/static/image/pink-sakura-flower.jpg",
@@ -70,7 +70,7 @@ const products = [
         name: "Rose Bloom",
 
         quantity: 1,
-        currency: "TON",
+        currency: "₽",
 
         image: ["/static/image/red-rose.jpg"],
 
@@ -110,7 +110,7 @@ const products = [
         name: "Orchid Dream",
 
         quantity: 1,
-        currency: "TON",
+        currency: "₽",
 
         image: ["/static/image/purple-orchid.jpg"],
 
@@ -142,7 +142,7 @@ const products = [
         name: "Lily Pure",
 
         quantity: 1,
-        currency: "TON",
+        currency: "₽",
 
         image: ["/static/image/white-lily.jpg"],
 
@@ -174,7 +174,7 @@ const products = [
         name: "Daisy Fresh",
 
         quantity: 1,
-        currency: "TON",
+        currency: "₽",
 
         image: ["/static/image/white-daisy.jpg"],
 
@@ -206,7 +206,7 @@ const products = [
         name: "Sunflower Joy",
 
         quantity: 1,
-        currency: "TON",
+        currency: "₽",
 
         image: ["/static/image/yellow-sunflower.jpg"],
 

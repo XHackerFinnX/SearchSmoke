@@ -57,21 +57,38 @@
                 </div>
             </div>
             <div class="cart-list" id="cartList"></div>
+            <div class="cart-empty" id="cartEmpty">
+                <div class="cart-empty-icon">
+                    <img
+                        src="/frontend/static/animation/sticker.webp"
+                        alt="Пустая корзина"
+                    />
+                </div>
+
+                <div class="cart-empty-title">Корзина пуста</div>
+                <a
+                    href="/frontend/templates/catalog.html"
+                    class="cart-empty-text cart-empty-link"
+                >
+                    Перейти в каталог
+                </a>
+            </div>
         </div>
 
         <div class="cart-summary">
-            <div class="cart-bonus">
-                <span>Вознаграждение за покупку</span>
-                <span class="bonus-value">2 405 +</span>
+            <div class="cart-sum">
+                <span style="font-size: 15px">Общая сумма</span>
+                <span class="sum-value">0 ₽</span>
             </div>
             <div class="cart-cashback">
-                <span>Кэшбэк</span>
-                <span class="cashback-value">0</span>
+                <span style="font-size: 15px">Кэшбэк</span>
+                <span class="cashback-value">0 ₽ (0%)</span>
             </div>
             <div class="cart-error" id="cartError">Бронирование недоступно</div>
             <button class="cart-pay-btn" id="payBtn">Забронировать</button>
         </div>
 
+        <!-- Модальное окно для показа удаления товаров -->
         <div class="cart-modal" id="clearModal">
             <div class="modal-overlay" onclick="closeClearModal()"></div>
             <div class="modal-content">
@@ -85,6 +102,59 @@
                 <button class="modal-back-btn" onclick="closeClearModal()">
                     Вернуть
                 </button>
+            </div>
+        </div>
+
+        <!-- Модальное окно карточки товара -->
+        <div id="productModal" class="modal-overlay">
+            <div class="product-modal">
+                <button
+                    class="modal-close"
+                    style="top: 12px"
+                    onclick="closeProductModal()"
+                >
+                    <svg
+                        fill="#FFFFFF"
+                        height="22"
+                        width="22"
+                        version="1.1"
+                        id="Layer_1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 1792 1792"
+                        xml:space="preserve"
+                    >
+                        <path
+                            d="M1082.2,896.6l410.2-410c51.5-51.5,51.5-134.6,0-186.1s-134.6-51.5-186.1,0l-410.2,410L486,300.4
+	c-51.5-51.5-134.6-51.5-186.1,0s-51.5,134.6,0,186.1l410.2,410l-410.2,410c-51.5,51.5-51.5,134.6,0,186.1
+	c51.6,51.5,135,51.5,186.1,0l410.2-410l410.2,410c51.5,51.5,134.6,51.5,186.1,0c51.1-51.5,51.1-134.6-0.5-186.2L1082.2,896.6z"
+                        />
+                    </svg>
+                </button>
+
+                <div class="product-modal-body">
+                    <div class="product-modal-header">
+                        <div
+                            class="product-image-slider"
+                            id="productImageSlider"
+                        ></div>
+                        <div class="carousel-dots" id="productImageDots"></div>
+                    </div>
+
+                    <h2 id="productModalName"></h2>
+                    <div class="product-modal-id" id="productModalId"></div>
+
+                    <div class="product-actions">
+                        <button class="action-btn">Посмотреть</button>
+                        <button class="action-btn">Статус</button>
+                        <button class="action-btn">Поделиться</button>
+                    </div>
+
+                    <div
+                        class="product-attributes"
+                        id="productAttributes"
+                    ></div>
+                </div>
             </div>
         </div>
 

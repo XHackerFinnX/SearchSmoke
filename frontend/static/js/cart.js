@@ -1,29 +1,251 @@
-const cartData = [
+const products = [
     {
-        id: 19965,
-        name: "Fresh Socks",
-        price: 17.99,
-        img: "/frontend/static/image/white-lily.jpg",
-        store: "Fresh Shop",
-        distance: 2.3,
+        id: "1",
+        slug: "sakura-flower",
+        name: "Sakura Flower",
+
+        quantity: 1,
+        currency: "₽",
+
+        image: [
+            "/frontend/static/image/pink-sakura-flower.jpg",
+            "/frontend/static/image/red-rose.jpg",
+        ],
+
+        pricing: {
+            basePrice: 200,
+        },
+
+        store: {
+            name: "Flower Market 2b2c",
+            distanceKm: 1.2,
+        },
+
+        attributes: [
+            {
+                key: "model",
+                label: "Model",
+                value: "Mushroom",
+                rarity: "3%",
+                price: 2.27,
+            },
+            {
+                key: "symbol",
+                label: "Symbol",
+                value: "Ghost",
+                rarity: "0.5%",
+                price: 2.29,
+            },
+            {
+                key: "backdrop",
+                label: "Backdrop",
+                value: "Pure Gold",
+                rarity: "1.5%",
+                price: 2.26,
+            },
+            {
+                key: "min_price",
+                label: "Мин. цена",
+                price: 2.26,
+            },
+        ],
+
+        variants: {
+            colors: ["pink", "red"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Season 1",
+            category: "Flowers",
+        },
         selected: true,
     },
+
     {
-        id: 77764,
-        name: "Ice Cream",
-        price: 6.06,
-        img: "/frontend/static/image/white-daisy.jpg",
-        store: "Sweet Treats",
-        distance: 0.8,
+        id: "2",
+        slug: "rose-bloom",
+        name: "Rose Bloom",
+
+        quantity: 1,
+        currency: "₽",
+
+        image: ["/frontend/static/image/red-rose.jpg"],
+
+        pricing: {
+            basePrice: 300,
+        },
+
+        store: {
+            name: "Rose Boutique",
+            distanceKm: 2.8,
+        },
+
+        attributes: [
+            {
+                key: "backdrop",
+                label: "Backdrop",
+                value: "Pure Gold",
+                rarity: "1.5%",
+                price: 2.26,
+            },
+        ],
+
+        variants: {
+            colors: ["red"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Season 1",
+            category: "Flowers",
+        },
+        selected: true,
+    },
+
+    {
+        id: "3",
+        slug: "orchid-dream",
+        name: "Orchid Dream",
+
+        quantity: 1,
+        currency: "₽",
+
+        image: ["/frontend/static/image/purple-orchid.jpg"],
+
+        pricing: {
+            basePrice: 100,
+        },
+
+        store: {
+            name: "Orchid House",
+            distanceKm: 0.6,
+        },
+
+        attributes: [],
+
+        variants: {
+            colors: ["purple"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Season 2",
+            category: "Flowers",
+        },
+        selected: true,
+    },
+
+    {
+        id: "4",
+        slug: "lily-pure",
+        name: "Lily Pure",
+
+        quantity: 1,
+        currency: "₽",
+
+        image: ["/frontend/static/image/white-lily.jpg"],
+
+        pricing: {
+            basePrice: 1000,
+        },
+
+        store: {
+            name: "White Garden",
+            distanceKm: 4.1,
+        },
+
+        attributes: [],
+
+        variants: {
+            colors: ["white"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Season 2",
+            category: "Flowers",
+        },
+        selected: true,
+    },
+
+    {
+        id: "5",
+        slug: "daisy-fresh",
+        name: "Daisy Fresh",
+
+        quantity: 1,
+        currency: "₽",
+
+        image: ["/frontend/static/image/white-daisy.jpg"],
+
+        pricing: {
+            basePrice: 600,
+        },
+
+        store: {
+            name: "Sunny Flowers",
+            distanceKm: 3.3,
+        },
+
+        attributes: [],
+
+        variants: {
+            colors: ["white"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Limited",
+            category: "Flowers",
+        },
+        selected: true,
+    },
+
+    {
+        id: "6",
+        slug: "sunflower-joy",
+        name: "Sunflower Joy",
+
+        quantity: 1,
+        currency: "₽",
+
+        image: ["/frontend/static/image/yellow-sunflower.jpg"],
+
+        pricing: {
+            basePrice: 900,
+        },
+
+        store: {
+            name: "Sun Market",
+            distanceKm: 5.0,
+        },
+
+        attributes: [],
+
+        variants: {
+            colors: ["yellow"],
+            sizes: [],
+        },
+
+        meta: {
+            collection: "Limited",
+            category: "Flowers",
+        },
         selected: true,
     },
 ];
 
+const userCashbackPercent = 5;
 let clearCountdown = 0;
 let clearTimer = null;
 let backupCart = [];
 let startX = null;
-let swipeDirection = null;
+let modalMode = "clear";
+let shopIsOpen = true;
+let removedItem = null;
+let removedIndex = null;
+let currentProduct = null;
 
 const trashSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="#ff4d4d" xmlns="http://www.w3.org/2000/svg">
     <path d="M3 6H21M5 6V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20V6M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke="#ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -59,6 +281,7 @@ const distanceSvg = `<svg
                                 viewBox="0 0 16 16"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor"
+                                style="margin-top: 1px;"
                             >
                                 <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94z"/>
                                 <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
@@ -66,23 +289,39 @@ const distanceSvg = `<svg
 
 function renderCart() {
     const cart = document.getElementById("cartList");
+    const emptyBlock = document.getElementById("cartEmpty");
+
+    if (!products.length) {
+        cart.innerHTML = "";
+        emptyBlock.style.display = "block";
+        updateCartCount();
+        return;
+    }
+
+    emptyBlock.style.display = "none";
     cart.innerHTML = "";
 
-    cartData.forEach((item, index) => {
+    products.forEach((item, index) => {
         cart.innerHTML += `
-        <div class="cart-item ${item.selected ? "active" : ""}">
-            <img src="${item.img}" class="cart-img">
+        <div class="cart-item ${
+            item.selected ? "active" : ""
+        }" onclick="openProductFromCart('${item.id}')">
+            <img src="${item.image[0]}" class="cart-img">
             <div class="cart-body">
                 <div class="cart-name">${item.name}</div>
-                <div class="store-name">${storeSvg} ${item.store}</div>
+                <div class="store-name">${storeSvg} ${item.store.name}</div>
                 <div class="product-distance">
-                    <span class="product-price">${item.price} ₽</span>
-                    <span>${item.distance} км ${distanceSvg}</span>
+                    <span class="product-price">${
+                        item.pricing.basePrice
+                    } ₽</span>
+                    <span style="display: flex; gap: 3px;">${
+                        item.store.distanceKm
+                    } км ${distanceSvg}</span>
                 </div>
             </div>
             <div class="cart-right">
-                <div class="cart-check" onclick="toggleItem(${index})"></div>
-                <div class="cart-trash" onclick="removeItem(${index})">${trashSvg}</div>
+                <div class="cart-check" onclick="toggleItem(${index}, event)"></div>
+                <div class="cart-trash" onclick="removeItem(${index}, event)">${trashSvg}</div>
             </div>
         </div>`;
     });
@@ -91,47 +330,76 @@ function renderCart() {
 }
 
 function updateCartCount() {
-    const selected = cartData.filter((i) => i.selected).length;
+    const selected = products.filter((i) => i.selected).length;
     document.getElementById("cartCount").textContent = selected;
 
     const btn = document.querySelector(".cart-unselect");
     btn.textContent =
-        selected === cartData.length && cartData.length
+        selected === products.length && products.length
             ? "Снять выделение"
             : "Выделить всё";
 
     const clearBtn = document.querySelector(".cart-clear");
-    if (cartData.length === 0) {
-        clearBtn.style.pointerEvents = "none";
-        clearBtn.style.opacity = "0.4";
+    clearBtn.style.pointerEvents = products.length ? "auto" : "none";
+    clearBtn.style.opacity = products.length ? "1" : "0.4";
+
+    const sum = products
+        .filter((i) => i.selected)
+        .reduce((acc, i) => acc + i.pricing.basePrice, 0);
+    document.querySelector(".sum-value").textContent =
+        sum.toFixed(2).replace(".", ",") + " ₽";
+
+    const cashback = sum * (userCashbackPercent / 100);
+    document.querySelector(".cashback-value").textContent =
+        cashback.toFixed(0) + " ₽ (" + userCashbackPercent + "%)";
+
+    const payBtn = document.getElementById("payBtn");
+    const error = document.getElementById("cartError");
+    if (!shopIsOpen || sum === 0) {
+        payBtn.disabled = true;
+        payBtn.style.opacity = "0.4";
+        error.style.display = "flex";
     } else {
-        clearBtn.style.pointerEvents = "auto";
-        clearBtn.style.opacity = "1";
+        payBtn.disabled = false;
+        payBtn.style.opacity = "1";
+        error.style.display = "none";
     }
 }
 
 function toggleAllItems() {
-    const allSelected = cartData.every((i) => i.selected);
-    cartData.forEach((i) => (i.selected = !allSelected));
+    const allSelected = products.every((i) => i.selected);
+    products.forEach((i) => (i.selected = !allSelected));
     renderCart();
 }
 
-function toggleItem(index) {
-    cartData[index].selected = !cartData[index].selected;
+function toggleItem(index, event) {
+    event.stopPropagation();
+    products[index].selected = !products[index].selected;
     renderCart();
 }
 
-function removeItem(index) {
-    cartData.splice(index, 1);
+function removeItem(index, event) {
+    event.stopPropagation();
+    removedItem = products[index];
+    removedIndex = index;
+    products.splice(index, 1);
     renderCart();
+
+    modalMode = "single";
+    showClearModal("Товар будет удалён");
 }
 
-function showClearModal() {
-    backupCart = JSON.parse(JSON.stringify(cartData));
-
+function showClearModal(text = "Товары будут удалены") {
     const modal = document.getElementById("clearModal");
     const counter = document.getElementById("modalCounter");
 
+    // Сброс старого таймера, если он есть
+    if (clearTimer) {
+        clearInterval(clearTimer);
+        clearTimer = null;
+    }
+
+    document.querySelector(".modal-text").textContent = text;
     clearCountdown = 7;
     counter.textContent = clearCountdown;
     modal.classList.add("active");
@@ -139,32 +407,60 @@ function showClearModal() {
     clearTimer = setInterval(() => {
         clearCountdown--;
         counter.textContent = clearCountdown;
-
-        if (clearCountdown <= 0) confirmClear();
+        if (clearCountdown <= 0) {
+            clearInterval(clearTimer);
+            clearTimer = null;
+            closeClearModal(false);
+        }
     }, 1000);
 
     addSwipeHandlers(modal);
 }
 
 function confirmClear() {
-    clearInterval(clearTimer);
-    cartData.length = 0;
+    if (clearTimer) {
+        clearInterval(clearTimer);
+        clearTimer = null;
+    }
+
+    if (modalMode === "clear") {
+        products.length = 0;
+    }
+
     closeClearModal(false);
     renderCart();
 }
 
 function closeClearModal(restore = true) {
-    const content = document.querySelector(".modal-content");
+    const modal = document.getElementById("clearModal");
+    const content = modal.querySelector(".modal-content");
+
     content.style.transform = "translateX(0) scale(1)";
     content.style.opacity = "1";
-    clearInterval(clearTimer);
-    document.getElementById("clearModal").classList.remove("active");
+
+    if (clearTimer) {
+        clearInterval(clearTimer);
+        clearTimer = null;
+    }
+
+    modal.classList.remove("active");
 
     if (restore) {
-        cartData.length = 0;
-        backupCart.forEach((i) => cartData.push(i));
+        if (modalMode === "clear") {
+            products.length = 0;
+            backupCart.forEach((i) => products.push(i));
+        }
+
+        if (modalMode === "single" && removedItem !== null) {
+            products.splice(removedIndex, 0, removedItem);
+        }
+
         renderCart();
     }
+
+    removedItem = null;
+    removedIndex = null;
+    modalMode = "clear";
 }
 
 function addSwipeHandlers(modal) {
@@ -177,26 +473,20 @@ function addSwipeHandlers(modal) {
 
     content.addEventListener("touchmove", (e) => {
         if (!startX) return;
-
-        const currentX = e.touches[0].clientX;
-        const diff = currentX - startX;
-
+        const diff = e.touches[0].clientX - startX;
         content.style.transform = `translateX(${diff}px) scale(0.97)`;
         content.style.opacity = 1 - Math.abs(diff) / 300;
     });
 
     content.addEventListener("touchend", (e) => {
         if (!startX) return;
-
         const diff = e.changedTouches[0].clientX - startX;
         content.style.transition = "transform 0.25s ease, opacity 0.25s ease";
 
-        if (diff < -100) {
-            content.style.transform = "translateX(-120%) scale(0.8)";
-            content.style.opacity = "0";
-            setTimeout(confirmClear, 200);
-        } else if (diff > 100) {
-            content.style.transform = "translateX(120%) scale(0.8)";
+        if (Math.abs(diff) > 100) {
+            content.style.transform = `translateX(${
+                diff > 0 ? 120 : -120
+            }%) scale(0.8)`;
             content.style.opacity = "0";
             setTimeout(confirmClear, 200);
         } else {
@@ -208,12 +498,119 @@ function addSwipeHandlers(modal) {
     });
 }
 
+// Открытии модального окна карточки
+function openProductFromCart(productId) {
+    const product = products.find((p) => p.id === productId);
+    if (!product) return;
+
+    currentProduct = product;
+
+    const slider = document.getElementById("productImageSlider");
+    const dotsContainer = document.getElementById("productImageDots");
+
+    document.getElementById("productModalName").textContent = product.name;
+    document.getElementById("productModalId").textContent = product.id;
+
+    renderAttributes(product.attributes || []);
+
+    slider.innerHTML = "";
+    dotsContainer.innerHTML = "";
+
+    product.image.forEach((src, index) => {
+        // slides
+        slider.innerHTML += `
+            <div class="product-image-slide">
+                <img src="${src}" alt="">
+            </div>
+        `;
+
+        // dots
+        dotsContainer.innerHTML += `
+            <span class="dot ${
+                index === 0 ? "active" : ""
+            }" data-index="${index}"></span>
+        `;
+    });
+
+    // если картинка одна — скрываем точки
+    dotsContainer.style.display = product.image.length > 1 ? "flex" : "none";
+
+    // старт всегда с первой
+    slider.scrollLeft = 0;
+
+    syncDotsWithSlider(slider, dotsContainer);
+
+    document.getElementById("productModal").classList.add("active");
+    lockBody();
+}
+
+function closeProductModal() {
+    document.getElementById("productModal").classList.remove("active");
+    unlockBody();
+}
+
+function renderAttributes(attributes) {
+    const container = document.getElementById("productAttributes");
+    container.innerHTML = "";
+
+    attributes.forEach((attr) => {
+        let valueHtml = "";
+
+        if (attr.value !== undefined) {
+            valueHtml += attr.value;
+        }
+
+        if (attr.rarity) {
+            valueHtml += ` <small>${attr.rarity}</small>`;
+        }
+
+        if (attr.price !== undefined) {
+            valueHtml += ` · ${attr.price} ₽`;
+        }
+
+        container.innerHTML += `
+            <div class="attr-row">
+                <span>${attr.label}</span>
+                <span class="attr-value">${valueHtml}</span>
+            </div>
+        `;
+    });
+}
+
+function lockBody() {
+    document.body.style.overflow = "hidden";
+}
+
+function unlockBody() {
+    document.body.style.overflow = "";
+}
+
+// синхронизация точек слайдера
+function syncDotsWithSlider(slider, dotsContainer) {
+    const dots = dotsContainer.querySelectorAll(".dot");
+
+    slider.onscroll = () => {
+        const slideWidth = slider.clientWidth;
+        const index = Math.round(slider.scrollLeft / slideWidth);
+
+        dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
+    };
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     document
         .querySelector(".cart-unselect")
         .addEventListener("click", toggleAllItems);
-    document
-        .querySelector(".cart-clear")
-        .addEventListener("click", showClearModal);
+
+    document.querySelector(".cart-clear").addEventListener("click", () => {
+        if (!products.length) return;
+        backupCart = JSON.parse(JSON.stringify(products));
+        products.length = 0;
+        renderCart();
+
+        modalMode = "clear";
+        showClearModal("Товары будут удалены");
+    });
+
     renderCart();
 });
