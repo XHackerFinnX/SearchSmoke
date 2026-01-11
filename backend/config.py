@@ -10,8 +10,8 @@ class Settings(BaseSettings):
     POSTGRESQL_DATABASE: SecretStr
     
     # Локальный запуск
-    WEBAPP_URL: str = "https://pecuniae.serveousercontent.com"
-    WEBHOOK_URL: str = "https://pecuniae.serveousercontent.com"
+    WEBAPP_URL: str = "https://imbribus.serveousercontent.com"
+    WEBHOOK_URL: str = "https://imbribus.serveousercontent.com"
     APP_HOST: str = "localhost"
     
     # Продакшен

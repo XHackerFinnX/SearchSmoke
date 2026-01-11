@@ -12,6 +12,7 @@ from fastapi.responses import FileResponse
 
 from router.catalog import router as router_catalog
 from router.profile import router as router_profile
+from router.map import router as router_map
 from router.qrcode import router as router_qrcode
 from router.error import router as router_error
 from router.auth import router as router_auth
@@ -92,6 +93,7 @@ app.mount(
 # Запуск app для FastAPI
 app.include_router(router_catalog)
 app.include_router(router_profile)
+app.include_router(router_map)
 app.include_router(router_qrcode)
 app.include_router(router_error)
 app.include_router(router_auth)

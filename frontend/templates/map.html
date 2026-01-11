@@ -4,10 +4,12 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Карта</title>
-        <link rel="stylesheet" href="/frontend/static/css/catalog.css" />
-        <link rel="stylesheet" href="/frontend/static/css/font_text.css" />
-        <link rel="stylesheet" href="/frontend/static/css/no_blue.css" />
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=4c4a397c-ffc9-474f-98c8-1ba93f684812"></script>
+        <!-- <link rel="stylesheet" href="/frontend/static/css/catalog.css" /> -->
+        <link rel="stylesheet" href="/static/css/font_text.css" />
+        <link rel="stylesheet" href="/static/css/no_blue.css" />
+        <link rel="stylesheet" href="/static/css/map.css" />
     </head>
     <body>
         <!-- Redesigned map page with modern layout -->
@@ -16,69 +18,13 @@
         </header>
 
         <main class="main-container">
-            <div class="map-placeholder">
-                <i
-                    class="fas fa-map-marked-alt"
-                    style="
-                        font-size: 72px;
-                        color: var(--text-secondary);
-                        margin-bottom: 16px;
-                    "
-                ></i>
-                <h2
-                    style="
-                        font-size: 22px;
-                        font-weight: 600;
-                        margin-bottom: 8px;
-                    "
-                >
-                    Карта скоро появится
-                </h2>
-                <p style="color: var(--text-secondary); font-size: 15px">
-                    Здесь будет интерактивная карта с ближайшими магазинами
-                </p>
-            </div>
+            <div id="map"></div>
 
             <section class="location-list">
-                <h3
-                    style="
-                        font-size: 18px;
-                        font-weight: 600;
-                        margin-bottom: 16px;
-                    "
-                >
+                <h3 style="font-size: 18px; margin-bottom: 16px">
                     Ближайшие магазины
                 </h3>
-                <div class="location-card">
-                    <div class="location-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="location-info">
-                        <div class="location-name">Центральный магазин</div>
-                        <div class="location-address">ул. Пушкина, д. 10</div>
-                    </div>
-                    <div class="location-distance">1.2 км</div>
-                </div>
-                <div class="location-card">
-                    <div class="location-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="location-info">
-                        <div class="location-name">Торговый центр</div>
-                        <div class="location-address">пр. Ленина, д. 45</div>
-                    </div>
-                    <div class="location-distance">2.5 км</div>
-                </div>
-                <div class="location-card">
-                    <div class="location-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="location-info">
-                        <div class="location-name">Рынок "Северный"</div>
-                        <div class="location-address">ул. Северная, д. 23</div>
-                    </div>
-                    <div class="location-distance">3.8 км</div>
-                </div>
+                <div id="shopsList"></div>
             </section>
         </main>
 
@@ -133,5 +79,6 @@
                 <span>Профиль</span>
             </a>
         </nav>
+        <script src="/static/js/map.js"></script>
     </body>
 </html>
