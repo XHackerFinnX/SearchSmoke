@@ -8,9 +8,12 @@
     --secondary-foreground: #6d6d71;
     --text-secondary: #a0a0a0;
     --accent-primary: #3b82f6;
+    --accent-primary-accept: #0c4eb9;
     --accent-secondary: #8b5cf6;
     --border-color: #333333;
     --muted: #3a3a3a;
+    --text-select: #4da3ff;
+    --text-delete: #ff4d4d;
 }
 
 * {
@@ -66,7 +69,7 @@ body {
 
 .cart-unselect,
 .cart-clear {
-    color: #4da3ff;
+    color: var(--text-select);
     background: none;
     border: none;
     cursor: pointer;
@@ -76,7 +79,7 @@ body {
 }
 
 .cart-clear {
-    color: #ff4d4d;
+    color: var(--text-delete);
     display: flex;
     align-items: center;
     gap: 6px;
@@ -213,7 +216,7 @@ body {
     align-items: center;
     width: 100%;
     height: 100%;
-    color: white;
+    color: var(--text-primary);
     font-size: 14px;
     font-weight: bold;
 }
@@ -255,13 +258,13 @@ body {
 }
 
 .cashback-value {
-    color: #38bdf8;
+    color: var(--text-select);
 }
 
 .cart-error {
     display: flex;
     justify-content: center;
-    color: #ff4d4d;
+    color: var(--text-delete);
     margin: 8px 0;
     font-size: 13px;
 }
@@ -271,15 +274,15 @@ body {
     padding: 14px;
     border-radius: 14px;
     border: none;
-    background: #1f5fa7;
-    color: #9cc9ff;
+    background: var(--accent-primary);
+    color: var(--text-primary);
     font-size: 16px;
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
 .cart-pay-btn:hover {
-    background: #164a82;
+    background: var(--accent-primary-accept);
 }
 
 @media (max-width: 480px) {
@@ -303,7 +306,7 @@ body {
     display: none;
     text-align: center;
     padding: 60px 20px;
-    color: #999;
+    color: var(--text-secondary);
 }
 
 .cart-empty-icon {
@@ -358,7 +361,7 @@ body {
 
 .modal-content {
     display: flex;
-    background: #3a3a3a;
+    background: var(--secondary);
     border-radius: 16px;
     padding: 8px;
     text-align: center;
@@ -397,7 +400,7 @@ body {
     transform: translate(-50%, -50%);
     font-size: 16px;
     font-weight: 700;
-    color: white;
+    color: var(--text-primary);
     z-index: 2;
 }
 
@@ -434,7 +437,7 @@ body {
     padding-right: 10px;
     border-radius: 16px;
     background: var(--accent-primary);
-    color: white;
+    color: var(--text-primary);
     border: none;
     font-size: 12px;
     cursor: pointer;
@@ -442,7 +445,7 @@ body {
 }
 
 .modal-back-btn:hover {
-    background: #2563eb;
+    background: var(--accent-primary);
     transform: translateY(-1px);
 }
 

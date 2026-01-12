@@ -11,8 +11,8 @@ const products = [
         currency: "₽",
 
         image: [
-            "/static/image/pink-sakura-flower.jpg",
-            "/static/image/red-rose.jpg",
+            "/frontend/static/image/pink-sakura-flower.jpg",
+            "/frontend/static/image/red-rose.jpg",
         ],
 
         pricing: {
@@ -72,7 +72,7 @@ const products = [
         quantity: 1,
         currency: "₽",
 
-        image: ["/static/image/red-rose.jpg"],
+        image: ["/frontend/static/image/red-rose.jpg"],
 
         pricing: {
             basePrice: 300,
@@ -112,7 +112,7 @@ const products = [
         quantity: 1,
         currency: "₽",
 
-        image: ["/static/image/purple-orchid.jpg"],
+        image: ["/frontend/static/image/purple-orchid.jpg"],
 
         pricing: {
             basePrice: 100,
@@ -144,7 +144,7 @@ const products = [
         quantity: 1,
         currency: "₽",
 
-        image: ["/static/image/white-lily.jpg"],
+        image: ["/frontend/static/image/white-lily.jpg"],
 
         pricing: {
             basePrice: 1000,
@@ -176,7 +176,7 @@ const products = [
         quantity: 1,
         currency: "₽",
 
-        image: ["/static/image/white-daisy.jpg"],
+        image: ["/frontend/static/image/white-daisy.jpg"],
 
         pricing: {
             basePrice: 600,
@@ -208,7 +208,7 @@ const products = [
         quantity: 1,
         currency: "₽",
 
-        image: ["/static/image/yellow-sunflower.jpg"],
+        image: ["/frontend/static/image/yellow-sunflower.jpg"],
 
         pricing: {
             basePrice: 900,

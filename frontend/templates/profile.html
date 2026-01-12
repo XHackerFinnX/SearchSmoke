@@ -7,10 +7,10 @@
             content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
         />
         <title>Профиль</title>
-        <link rel="stylesheet" href="/static/css/profile.css" />
-        <link rel="stylesheet" href="/static/css/catalog.css" />
-        <link rel="stylesheet" href="/static/css/no_blue.css" />
-        <link rel="stylesheet" href="/static/css/font_text.css" />
+        <link rel="stylesheet" href="/frontend/static/css/profile.css" />
+        <link rel="stylesheet" href="/frontend/static/css/catalog.css" />
+        <link rel="stylesheet" href="/frontend/static/css/no_blue.css" />
+        <link rel="stylesheet" href="/frontend/static/css/font_text.css" />
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
     </head>
     <body>
@@ -415,7 +415,7 @@
 
         <!-- Fixed bottom navigation bar -->
         <nav class="bottom-nav">
-            <a href="/" class="nav-link">
+            <a href="/frontend/templates/catalog.html" class="nav-link">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -431,7 +431,7 @@
 
                 <span>Каталог</span>
             </a>
-            <a href="/map" class="nav-link">
+            <a href="/frontend/templates/map.html" class="nav-link">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 576 512"
@@ -445,7 +445,7 @@
                 </svg>
                 <span>Карта</span>
             </a>
-            <a href="/profile" class="nav-link active">
+            <a href="/frontend/templates/profile.html" class="nav-link active">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -864,6 +864,6 @@
             </div>
         </div>
 
-        <script src="/static/js/profile.js"></script>
+        <script src="/frontend/static/js/profile.js"></script>
     </body>
 </html>
