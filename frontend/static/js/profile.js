@@ -925,6 +925,34 @@ function loadSettings() {
 
 // Format balance display
 document.addEventListener("DOMContentLoaded", () => {
+    if (
+        !window.Telegram ||
+        !Telegram.WebApp ||
+        !Telegram.WebApp.initDataUnsafe.user
+    ) {
+        console.warn("Открыто не в Telegram WebApp");
+        return;
+    }
+
+    const user = Telegram.WebApp.initDataUnsafe.user;
+
+    const usernameEl = document.getElementById("tgUsername");
+    const avatarEl = document.getElementById("tgAvatar");
+
+    // Имя
+    if (user.username) {
+        usernameEl.textContent = "@" + user.username;
+    } else {
+        usernameEl.textContent = user.first_name || "Пользователь";
+    }
+
+    // Фото
+    if (user.photo_url) {
+        avatarEl.src = user.photo_url;
+    } else {
+        avatarEl.src = "/placeholder.svg?height=120&width=120";
+    }
+
     // Load settings
     loadSettings();
     // Initialize display
