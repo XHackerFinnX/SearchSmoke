@@ -199,9 +199,19 @@ body {
     color: var(--text-secondary);
 }
 
-.tg-balloon__btn {
+.tg-balloon__actions {
+    display: flex;
+    gap: 8px;
     margin-top: 10px;
-    width: 100%;
+}
+
+.tg-balloon__btn-route,
+.tg-balloon__btn-map,
+.tg-balloon__btn-catalog,
+.tg-balloon__btn-copy {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
     border: none;
     border-radius: 10px;
     padding: 10px;
@@ -211,14 +221,12 @@ body {
     cursor: pointer;
 }
 
-@media (max-width: 380px) {
-    .tg-balloon {
-        min-width: 250px;
-    }
+.tg-balloon__btn-copy.copied {
+    background-color: #22c55e;
 }
 
-@media (max-width: 340px) {
+@media (max-width: 380px) {
     .tg-balloon {
-        min-width: 200px;
+        min-width: 260px;
     }
 }
